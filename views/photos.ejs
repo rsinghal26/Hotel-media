@@ -1,0 +1,23 @@
+<% include partials/header.ejs %>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container  text-center">
+            <h1>Welcome To Online Gallery</h1>
+            <p>
+                <a href="photos/addNew">Add new photo</a>            
+            </p>
+        </div>
+    </header>
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+        <% photos.forEach(function(photo){ %>
+        <div class="col-md-3 col-sm-6">
+            <div class="img-thumbnail">
+                <img src="<%= photo.image %>" height="30%" width="100%">
+                   <figcaption class="figure-caption"><%= photo.name %></figcaption>
+            </div>
+        </div>
+        <% }); %>
+    </div>
+</div>
+
+<% include partials/footer.ejs %>
