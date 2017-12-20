@@ -1,0 +1,57 @@
+<% include ../partials/header.ejs %>
+
+<div class="container" style="margin-bottom:50px;">
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <h4><b>OTHER HOTELS</b></h4>
+            <hr>
+            <div class="list-group">
+                <% hotels.forEach(function(oneHotel){ %>
+                    <a href="/hotels/<%=oneHotel._id%>" class="list-group-item <%if(oneHotel.name == hotel.name){%> active <%}%> "><%=oneHotel.name.toUpperCase()%></a>
+              <%  }); %>
+              
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class=" img-thumbnail">
+                <img class="pull" src="<%= hotel.image %>" width="100%">
+                <div class="thumbnail" style="padding:10px">
+                   <figcaption class="figure-caption" style="padding-top:10px"><strong><h5><a href="#"><%= hotel.name %></a></strong></h5></figcaption>
+                   <figcaption class="figure-caption"><%= hotel.description %></figcaption>
+                   <figcaption class="figure-caption" style="padding-top:10px"><i><strong><p>Summited By- <%= hotel.author.username %></strong></i></figcaption>
+                </div> 
+                    <% if(currentUser && hotel.author.id.equals(currentUser.id)){ %>
+                        <form class="form-inline" action="/hotels/<%=hotel._id %>?_method=DELETE" method="POST" style="padding:0px 10px">
+                            <button class="btn btn-sm btn-outline-danger btn-block" style="width:60px">Delete</button>    
+                            <a class="btn btn-sm btn-outline-warning" href="/hotels/<%=hotel._id%>/edit" role="button" style="width:60px;margin-left:5px;">Edit</a>
+                        </form>
+                    <% } %>
+            </div>
+            
+            <div class="img-thumbnail" style="margin-top:15px;background-color:#F0F0F0; padding:10px">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/hotels/<%=hotel._id%>/comment/new" role="button">Add more comment</a>
+                </div>
+                <% hotel.comments.forEach(function(comment){ %>
+                    <div>
+                        <hr>
+                       <strong><%= comment.author.username.toUpperCase() %>-</strong>
+                       <p style="padding-top:-10px;margin-top:-5px;"><%= comment.text %></p>
+                        <% if(currentUser && comment.author.id.equals(currentUser.id)){ %>
+                            <form class="form-inline" action="/hotels/<%=hotel._id %>/comment/<%=comment._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-outline-danger btn-block" style="width:60px">Delete</button>    
+                                <a class="btn btn-sm btn-outline-warning" href="/hotels/<%=hotel._id%>/comment/<%=comment._id%>/edit" role="button"style="width:60px;margin-left:5px;" >Edit</a>
+                            </form>
+                        <hr>    
+                    </div>        
+                    <% } %>     
+                <% }) %>
+
+                
+            </div>    
+        </div>
+    </div>    
+</div>
+
+
+<% include ../partials/footer.ejs %>
