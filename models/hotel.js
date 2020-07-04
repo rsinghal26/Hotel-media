@@ -16,6 +16,8 @@ var hotelSchema = new mongoose.Schema({
          ref: "Comment"
       }
    ]    
-});
+},{
+    usePushEach: true
+  });
 
 module.exports = mongoose.model("hotel",hotelSchema);
